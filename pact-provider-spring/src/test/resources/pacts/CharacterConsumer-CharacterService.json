@@ -1,0 +1,117 @@
+{
+  "provider": {
+    "name": "CharacterService"
+  },
+  "consumer": {
+    "name": "CharacterConsumer"
+  },
+  "interactions": [
+    {
+      "description": "get all characters",
+      "request": {
+        "method": "GET",
+        "path": "/characters"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "name": "Ted",
+            "description": "Fast talking priest with money resting in his account"
+          },
+          {
+            "name": "Ted",
+            "description": "Fast talking priest with money resting in his account"
+          }
+        ],
+        "matchingRules": {
+          "body": {
+            "$": {
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 2
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].description": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "character exist"
+        }
+      ]
+    },
+    {
+      "description": "get character name with Dougal",
+      "request": {
+        "method": "GET",
+        "path": "/character/Dougal"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "Dougal",
+          "description": "Simpleton; loves spider baby; priest and former milkman"
+        },
+        "matchingRules": {
+          "body": {
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.description": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "character with name Dougal exists"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.1.7"
+    }
+  }
+}
